@@ -22,7 +22,7 @@ const router = express.Router();
 // ── Family CRUD ───────────────────────────────────────────────────────────────
 router.post("/create-family", verifyJWT, upload.single("familyPhoto"), createFamily);
 router.get("/my-families", verifyJWT, getMyFamilies);
-router.get("/:familyId", verifyJWT, getFamily);
+
 router.put("/update/:family_id", verifyJWT, upload.single("familyPhoto"), updateFamily);
 router.delete("/delete-family/:family_id", verifyJWT, deleteFamily);
 
@@ -42,4 +42,6 @@ router.post("/join-family", verifyJWT, joinFamily);
 router.get("/tree", verifyJWT, getFamilyAncestorsAndDescendants);
 router.get("/tree/:user_id", getFamilyAncestorsAndDescendantsById);
 
+
+router.get("/:familyId", verifyJWT, getFamily);
 export default router;
