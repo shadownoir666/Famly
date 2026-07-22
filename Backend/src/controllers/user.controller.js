@@ -9,12 +9,12 @@ import {
 } from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { OAuth2Client } from "google-auth-library";
+// import { OAuth2Client } from "google-auth-library";
 import { Op } from "sequelize";
 import { PendingSignup } from "../models/pendingSignup.models.js";
 import { sendOTPEmail } from "../utils/sendEmail.js";
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 
 // Google login controller
 
@@ -98,7 +98,7 @@ const sendSignupOTP = asyncHandler(async (req, res) => {
   }
 
   // Generate OTP
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const otp = Math.floor(100000 + Math.random() * 900000).toString(); //6 digit
 
   // Remove old pending signup if any
   const oldPending = await PendingSignup.findOne({
@@ -127,7 +127,7 @@ const sendSignupOTP = asyncHandler(async (req, res) => {
     email,
     otp,
     attempts: 0,
-    expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+    expiresAt: new Date(Date.now() + 5 * 60 * 1000),//5 min in milliseconds
     signupData: {
       fullname,
       username,
@@ -467,7 +467,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       incomingRefreshToken,
       process.env.REFRESH_TOKEN_SECRET,
     );
-    const user = await User.findByPk(decoded.user_id);
+    const user = await User.findByPk(decoded.user_id); // it returns sequalize modal instance
 
     if (!user) throw new ApiError(401, "Invalid token");
     if (incomingRefreshToken !== user.refreshToken)
@@ -513,7 +513,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
   console.log(isValid);
   if (!isValid) throw new ApiError(401, "Old password incorrect");
 
-  console.log(newPassword);
+  // console.log(newPassword);
   req.user.passwordHash = newPassword;
 
   await req.user.save();

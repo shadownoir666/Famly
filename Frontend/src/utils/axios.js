@@ -4,7 +4,7 @@ import { getAuthData, saveAuthData, clearAuthData } from "./auth.utils";
 const api = axios.create({
   baseURL: import.meta.env.VITE_SERVER,
   withCredentials: true,
-});
+}); // axios instance
 
 api.interceptors.request.use((config) => {
   const auth = getAuthData();

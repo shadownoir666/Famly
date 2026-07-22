@@ -126,12 +126,12 @@ if (!process.env.CORS_ORIGIN) {
 
 app.use(cors({
     origin:process.env.CORS_ORIGIN,
-    credentials:true
+    credentials:true //allow cookies,headers etc with requests from the frontend request if origin things solved.
 })) 
 
 app.use(express.json({limit: "16kb"})) 
 
-app.use(express.urlencoded({extended: true , limit:"16kb"}))  
+app.use(express.urlencoded({extended: true , limit:"16kb"}))   // extended-true allows for rich objects and arrays to be encoded into the URL-encoded format, allowing for a JSON-like experience with URL-encoded.
 
 app.use(express.static("public")) 
 

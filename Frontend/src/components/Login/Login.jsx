@@ -504,7 +504,7 @@ const AuthCard = () => {
 
   const { login } = useAuth();
   const [showOtpModal, setShowOtpModal] = useState(false);
-  const [pendingEmail, setPendingEmail] = useState("");
+  const [pendingEmail, setPendingEmail] = useState(""); //because we have to send verify otp with it.
   const [otp, setOtp] = useState("");
   const [resendCooldown, setResendCooldown] = useState(0);
 
@@ -527,6 +527,7 @@ const AuthCard = () => {
     return () => clearInterval(timer);
   }, [resendCooldown]);
 
+  //after sending otp cooldown timer
   const onSubmit = async (data) => {
     setLoading(true);
     try {
